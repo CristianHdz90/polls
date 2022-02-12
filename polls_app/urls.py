@@ -7,11 +7,8 @@ app_name = "polls_app"
 
 urlpatterns = [
     # /polls/
-    path(route="", view=views.index, name="index"),
-    # /polls/5/detail/
-    path("specific/<int:question_id>/", view=views.detail, name="detail"),
-    # /polls/5/results/
-    path("<int:question_id>/results/", view=views.results, name="results"),
-    # /polls/5/vote/
-    path("<int:question_id>/vote/", view=views.vote, name="vote"),
+    path(route="", view=views.IndexView.as_view(), name="index"),
+    path("specific/<int:pk>/", view=views.DetailView.as_view(), name="detail"),
+    path("<int:pk>/results/", view=views.ResultsView.as_view(), name="results"),
+    path("<int:pk>/vote/", view=views.vote, name="vote"),
 ]
