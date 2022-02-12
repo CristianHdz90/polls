@@ -1,12 +1,23 @@
 {% if question %}
-<h1>{{ question.question_text }}</h1>
-<ul>
-  {% with question.choice_set.all as choices %}
-  {% for choice in choices %}
-  <li>{{ choice.choice_text }}</li>
-  {% endfor %}
-  {% endwith %}
-</ul>
+
+
 {% else %}
 <p>There's no any question here...</p>
 {% endif %}
+
+
+<form action="{% url 'polls_app:vote' question.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+<legend><h1>{{ question.question_text }}</h1></legend>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% with question.choice_set.all as choices %}
+{% for choice in choices %}
+<input type="radio", name="choice", id="choice{{ forloop.counter }}", value="{{ choice.id }}">
+<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+<br>
+{% endfor %}
+{% endwith %}
+</fieldset>
+<input type="submit", value="Vote">
+</form>
